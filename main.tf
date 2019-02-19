@@ -9,6 +9,8 @@ locals {
   hacker_cidr = "${cidrsubnet(local.vpc_cidr,4,4)}" # 20
 
   hackers = ["tom", "stuart"]
+
+  default_vm_size = "t2.micro"
 }
 
 data "aws_ami" "centos" {
@@ -24,7 +26,8 @@ resource "aws_vpc" "hacking_vpc" {
   cidr_block = "${local.vpc_cidr}"
 
   tags = {
-    Name = "hacking-vpc"
+    Name          = "hacking-vpc"
+    ResourceGroup = "Hacking"
   }
 }
 
@@ -33,7 +36,8 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = "${aws_vpc.hacking_vpc.id}"
 
   tags = {
-    Name = "hacking-gateway"
+    Name          = "hacking-gateway"
+    ResourceGroup = "Hacking"
   }
 }
 
@@ -46,6 +50,7 @@ resource "aws_route_table" "hacking_route_table" {
   }
 
   tags = {
-    Name = "hacking-route-table"
+    Name          = "hacking-route-table"
+    ResourceGroup = "Hacking"
   }
 }

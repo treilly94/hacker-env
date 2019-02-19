@@ -4,7 +4,8 @@ resource "aws_subnet" "hacker_subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "hacker-subnet"
+    Name          = "hacker-subnet"
+    ResourceGroup = "Hacking"
   }
 }
 
@@ -35,7 +36,8 @@ resource "aws_security_group" "hacker_sg" {
   }
 
   tags = {
-    Name = "hacker-security-group"
+    Name          = "hacker-security-group"
+    ResourceGroup = "Hacking"
   }
 }
 
@@ -43,7 +45,7 @@ resource "aws_instance" "hacker_vms" {
   count = "${length(local.hackers)}"
 
   ami           = "${data.aws_ami.centos.id}"
-  instance_type = "t2.micro"
+  instance_type = "${local.default_vm_size}"
   key_name      = "tom-hacker-keypair"
 
   subnet_id       = "${aws_subnet.hacker_subnet.id}"
@@ -51,6 +53,7 @@ resource "aws_instance" "hacker_vms" {
   depends_on      = ["aws_internet_gateway.gw"]
 
   tags = {
-    Name = "${local.hackers[count.index]}-vm"
+    Name          = "${local.hackers[count.index]}-vm"
+    ResourceGroup = "Hacking"
   }
 }
