@@ -8,6 +8,35 @@ resource "aws_subnet" "hacker_subnet" {
   }
 }
 
+resource "aws_route_table_association" "hacker_route_table_association" {
+  subnet_id      = "${aws_subnet.hacker_subnet.id}"
+  route_table_id = "${aws_route_table.hacking_route_table.id}"
+}
+
+resource "aws_security_group" "hacker_sg" {
+  name        = "hacker_security_group"
+  description = "Security rules for the hacker vms"
+  vpc_id      = "${aws_vpc.hacking_vpc.id}"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "hacker-security-group"
+  }
+}
+
 resource "aws_instance" "tom_vm" {
   ami           = "${data.aws_ami.centos.id}"
   instance_type = "t2.micro"
@@ -15,6 +44,7 @@ resource "aws_instance" "tom_vm" {
 
   subnet_id       = "${aws_subnet.hacker_subnet.id}"
   security_groups = ["${aws_security_group.hacker_sg.id}"]
+  depends_on      = ["aws_internet_gateway.gw"]
 
   tags = {
     Name = "tom-vm"
