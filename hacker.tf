@@ -18,6 +18,7 @@ resource "aws_security_group" "hacker_sg" {
   description = "Security rules for the hacker vms"
   vpc_id      = "${aws_vpc.hacking_vpc.id}"
 
+  # SSH
   ingress {
     from_port   = 22
     to_port     = 22
@@ -25,6 +26,7 @@ resource "aws_security_group" "hacker_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Internet
   egress {
     from_port   = 0
     to_port     = 0
@@ -37,7 +39,9 @@ resource "aws_security_group" "hacker_sg" {
   }
 }
 
-resource "aws_instance" "tom_vm" {
+resource "aws_instance" "hacker_vms" {
+  count = "${length(local.hackers)}"
+
   ami           = "${data.aws_ami.centos.id}"
   instance_type = "t2.micro"
   key_name      = "tom-hacker-keypair"
@@ -47,6 +51,6 @@ resource "aws_instance" "tom_vm" {
   depends_on      = ["aws_internet_gateway.gw"]
 
   tags = {
-    Name = "tom-vm"
+    Name = "${local.hackers[count.index]}-vm"
   }
 }
