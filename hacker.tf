@@ -35,6 +35,21 @@ resource "aws_security_group" "hacker_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Internal
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["${local.vpc_cidr}"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["${local.vpc_cidr}"]
+  }
+
   tags = {
     Name          = "hacker-security-group"
     ResourceGroup = "Hacking"
@@ -46,7 +61,7 @@ resource "aws_instance" "hacker_vms" {
 
   ami           = "${data.aws_ami.centos.id}"
   instance_type = "${local.default_vm_size}"
-  key_name      = "tom-hacker-keypair"
+  key_name      = "${local.hackers[count.index]}-hacker-keypair"
 
   subnet_id       = "${aws_subnet.hacker_subnet.id}"
   security_groups = ["${aws_security_group.hacker_sg.id}"]

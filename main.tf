@@ -8,9 +8,9 @@ locals {
   target_cidr = "${cidrsubnet(local.vpc_cidr,4,3)}" # 20
   hacker_cidr = "${cidrsubnet(local.vpc_cidr,4,4)}" # 20
 
-  hackers = ["tom", "stuart"]
+  hackers = ["tom", "stuart", "gen", "kayleigh"]
 
-  default_vm_size = "t2.micro"
+  default_vm_size = "t3.nano"
 }
 
 data "aws_ami" "centos" {

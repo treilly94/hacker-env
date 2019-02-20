@@ -35,6 +35,21 @@ resource "aws_security_group" "target_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Internal
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["${local.vpc_cidr}"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["${local.vpc_cidr}"]
+  }
+
   tags = {
     Name          = "target-security-group"
     ResourceGroup = "Hacking"
