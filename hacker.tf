@@ -59,8 +59,8 @@ resource "aws_security_group" "hacker_sg" {
 resource "aws_instance" "hacker_vms" {
   count = "${length(local.hackers)}"
 
-  ami           = "${data.aws_ami.centos.id}"
-  instance_type = "${local.default_vm_size}"
+  ami           = "${data.aws_ami.kali.id}"
+  instance_type = "t2.nano"                                      # Kali wont run on t3s
   key_name      = "${local.hackers[count.index]}-hacker-keypair"
 
   subnet_id              = "${aws_subnet.hacker_subnet.id}"

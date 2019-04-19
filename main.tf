@@ -24,6 +24,16 @@ data "aws_ami" "centos" {
   }
 }
 
+data "aws_ami" "kali" {
+  most_recent = true
+  owners      = ["aws-marketplace"]
+
+  filter {
+    name   = "product-code"
+    values = ["89bab4k3h9x4rkojcm2tj8j4l"]
+  }
+}
+
 resource "aws_vpc" "hacking_vpc" {
   cidr_block = "${local.vpc_cidr}"
 
