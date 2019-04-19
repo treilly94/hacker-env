@@ -4,6 +4,7 @@ provider "aws" {
 }
 
 locals {
+  env         = "Hacking"
   vpc_cidr    = "10.0.0.0/16"
   target_cidr = "${cidrsubnet(local.vpc_cidr,4,3)}" # 20
   hacker_cidr = "${cidrsubnet(local.vpc_cidr,4,4)}" # 20
@@ -15,6 +16,7 @@ locals {
 
 data "aws_ami" "centos" {
   most_recent = true
+  owners      = ["aws-marketplace"]
 
   filter {
     name   = "product-code"
@@ -26,8 +28,8 @@ resource "aws_vpc" "hacking_vpc" {
   cidr_block = "${local.vpc_cidr}"
 
   tags = {
-    Name          = "hacking-vpc"
-    ResourceGroup = "Hacking"
+    Name          = "${local.env}-vpc"
+    ResourceGroup = "${local.env}"
   }
 }
 
@@ -36,8 +38,8 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = "${aws_vpc.hacking_vpc.id}"
 
   tags = {
-    Name          = "hacking-gateway"
-    ResourceGroup = "Hacking"
+    Name          = "${local.env}-gateway"
+    ResourceGroup = "${local.env}"
   }
 }
 
@@ -50,7 +52,7 @@ resource "aws_route_table" "hacking_route_table" {
   }
 
   tags = {
-    Name          = "hacking-route-table"
-    ResourceGroup = "Hacking"
+    Name          = "${local.env}-route-table"
+    ResourceGroup = "${local.env}"
   }
 }

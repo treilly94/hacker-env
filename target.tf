@@ -5,7 +5,7 @@ resource "aws_subnet" "target_subnet" {
 
   tags = {
     Name          = "target-subnet"
-    ResourceGroup = "Hacking"
+    ResourceGroup = "${local.env}"
   }
 }
 
@@ -52,7 +52,7 @@ resource "aws_security_group" "target_sg" {
 
   tags = {
     Name          = "target-security-group"
-    ResourceGroup = "Hacking"
+    ResourceGroup = "${local.env}"
   }
 }
 
@@ -61,12 +61,31 @@ resource "aws_instance" "target_vm" {
   instance_type = "${local.default_vm_size}"
   key_name      = "tom-hacker-keypair"
 
-  subnet_id       = "${aws_subnet.target_subnet.id}"
-  security_groups = ["${aws_security_group.target_sg.id}"]
-  depends_on      = ["aws_internet_gateway.gw"]
+  subnet_id              = "${aws_subnet.target_subnet.id}"
+  vpc_security_group_ids = ["${aws_security_group.target_sg.id}"]
+  depends_on             = ["aws_internet_gateway.gw"]
+
+  root_block_device = {
+    volume_type           = "standard"
+    delete_on_termination = true
+  }
 
   tags = {
     Name          = "target-vm"
-    ResourceGroup = "Hacking"
+    ResourceGroup = "${local.env}"
+  }
+
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      host        = "${self.public_ip}"
+      user        = "centos"
+      private_key = "${file("tom-hacker-keypair.pem")}"
+    }
+
+    scripts = [
+      "./scripts/update.sh",
+      "./scripts/docker.sh",
+    ]
   }
 }

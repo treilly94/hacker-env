@@ -4,8 +4,8 @@ resource "aws_subnet" "hacker_subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name          = "hacker-subnet"
-    ResourceGroup = "Hacking"
+    Name          = "${local.env}-subnet"
+    ResourceGroup = "${local.env}"
   }
 }
 
@@ -51,8 +51,8 @@ resource "aws_security_group" "hacker_sg" {
   }
 
   tags = {
-    Name          = "hacker-security-group"
-    ResourceGroup = "Hacking"
+    Name          = "${local.env}-security-group"
+    ResourceGroup = "${local.env}"
   }
 }
 
@@ -63,12 +63,17 @@ resource "aws_instance" "hacker_vms" {
   instance_type = "${local.default_vm_size}"
   key_name      = "${local.hackers[count.index]}-hacker-keypair"
 
-  subnet_id       = "${aws_subnet.hacker_subnet.id}"
-  security_groups = ["${aws_security_group.hacker_sg.id}"]
-  depends_on      = ["aws_internet_gateway.gw"]
+  subnet_id              = "${aws_subnet.hacker_subnet.id}"
+  vpc_security_group_ids = ["${aws_security_group.hacker_sg.id}"]
+  depends_on             = ["aws_internet_gateway.gw"]
+
+  root_block_device = {
+    volume_type           = "standard"
+    delete_on_termination = true
+  }
 
   tags = {
     Name          = "${local.hackers[count.index]}-vm"
-    ResourceGroup = "Hacking"
+    ResourceGroup = "${local.env}"
   }
 }
