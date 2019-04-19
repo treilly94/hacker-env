@@ -85,7 +85,7 @@ resource "aws_instance" "target_vm" {
 
     scripts = [
       "./scripts/update.sh",
-      "./scripts/docker.sh",
+      "./scripts/add_users.sh",
     ]
   }
 }
