@@ -1,7 +1,7 @@
 sudo useradd vorderman
 echo bitches | sudo passwd vorderman --stdin
 
-sudo user add savile
+sudo useradd savile
 echo 7642 | sudo passwd savile --stdin
 
 # Allow password auth
