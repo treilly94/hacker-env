@@ -9,7 +9,7 @@ locals {
   target_cidr = "${cidrsubnet(local.vpc_cidr,4,3)}" # 20
   hacker_cidr = "${cidrsubnet(local.vpc_cidr,4,4)}" # 20
 
-  hackers = ["tom", "stuart", "gen", "kayleigh"]
+  hackers = ["tom", "stuart", "gen", "kayleigh", "darrell"]
 
   default_vm_size = "t3.nano"
 }
