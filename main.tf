@@ -7,9 +7,7 @@ locals {
   env         = "Hacking"
   vpc_cidr    = "10.0.0.0/16"
   target_cidr = "${cidrsubnet(local.vpc_cidr,4,3)}" # 20
-  hacker_cidr = "${cidrsubnet(local.vpc_cidr,4,4)}" # 20
-
-  hackers = ["tom", "stuart", "gen", "kayleigh", "darrell"]
+  access_cidr = "${cidrsubnet(local.vpc_cidr,4,4)}" # 20
 
   default_vm_size = "t3.nano"
 }
@@ -21,16 +19,6 @@ data "aws_ami" "centos" {
   filter {
     name   = "product-code"
     values = ["aw0evgkw8e5c1q413zgy5pjce"]
-  }
-}
-
-data "aws_ami" "kali" {
-  most_recent = true
-  owners      = ["aws-marketplace"]
-
-  filter {
-    name   = "product-code"
-    values = ["89bab4k3h9x4rkojcm2tj8j4l"]
   }
 }
 
