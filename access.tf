@@ -34,6 +34,14 @@ resource "aws_security_group" "access_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # VPN
+  ingress {
+    from_port   = 1194
+    to_port     = 1194
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   # Internet
   egress {
     from_port   = 0
@@ -102,10 +110,16 @@ resource "null_resource" "access" {
     private_key = "${file("tom-hacker-keypair.pem")}"
   }
 
+  provisioner "file" {
+    source      = "./vpn/hacker_openvpn.tar.gz"
+    destination = "~/hacker_openvpn.tar.gz"
+  }
+
   provisioner "remote-exec" {
     scripts = [
       "./scripts/update.sh",
       "./scripts/docker.sh",
+      "./scripts/vpn.sh",
     ]
   }
 }
