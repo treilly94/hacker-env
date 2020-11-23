@@ -1,3 +1,4 @@
+#!/bin/bash
 export OVPN_DATA=/opt/openvpn/etc/
 
 # Make config directory
