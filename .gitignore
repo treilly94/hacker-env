@@ -1,6 +1,7 @@
 # Terraform
 .terraform/
 *.tfstate*
+.terragrunt-cache/
 
 # Hydra
 hydra.restore
