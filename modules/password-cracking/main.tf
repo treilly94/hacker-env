@@ -1,7 +1,3 @@
-provider "digitalocean" {
-  token = var.do_token
-}
-
 data "digitalocean_ssh_key" "key" {
   name = var.ssh_key
 }
