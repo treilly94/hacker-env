@@ -2,23 +2,17 @@ provider "digitalocean" {
   token = var.do_token
 }
 
-locals {
-  region = "lon1"
-  size   = "s-1vcpu-1gb"
-  tags   = ["hacking"]
-}
-
 data "digitalocean_ssh_key" "key" {
-  name = "Thinkpad"
+  name = var.ssh_key
 }
 
 resource "digitalocean_droplet" "password_cracking" {
   image  = "ubuntu-18-04-x64"
   name       = "password-cracking"
-  region     = local.region
-  size       = local.size
+  region     = var.region
+  size       = var.size
   monitoring = true
-  tags       = local.tags
+  tags       = var.tags
   ssh_keys   = [data.digitalocean_ssh_key.key.fingerprint]
 
   provisioner "remote-exec" {
