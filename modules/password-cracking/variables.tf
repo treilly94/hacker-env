@@ -1,4 +1,3 @@
-variable "do_token" {}
 variable "ssh_agent" {}
 variable "ssh_key" {
     default = "Thinkpad"
