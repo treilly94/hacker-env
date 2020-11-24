@@ -1,3 +1,7 @@
+locals {
+  internet = ["0.0.0.0/0", "::/0"]
+}
+
 resource "digitalocean_firewall" "self" {
   name = "hacking"
   tags = var.firewall_tags
@@ -22,14 +26,17 @@ resource "digitalocean_firewall" "self" {
   outbound_rule {
     protocol              = "tcp"
     port_range            = "1-65535"
+    destination_addresses = local.internet
   }
 
   outbound_rule {
     protocol              = "udp"
     port_range            = "1-65535"
+    destination_addresses = local.internet
   }
 
   outbound_rule {
     protocol              = "icmp"
+    destination_addresses = local.internet
   }
 }
