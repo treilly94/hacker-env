@@ -2,7 +2,7 @@ data "digitalocean_ssh_key" "key" {
   name = var.ssh_key
 }
 
-resource "digitalocean_droplet" "password_cracking" {
+resource "digitalocean_droplet" "this" {
   image  = "ubuntu-18-04-x64"
   name       = "password-cracking"
   region     = var.region
@@ -19,15 +19,16 @@ resource "digitalocean_droplet" "password_cracking" {
       agent_identity = var.ssh_agent
     }
 
+
     scripts = [
-      "./setup.sh"
+      "./scripts/setup.sh"
     ]
   }
 }
 
-resource "digitalocean_project" "password_cracking" {
+resource "digitalocean_project" "this" {
   name = "password-cracking"
   resources = [
-    digitalocean_droplet.password_cracking.urn
+    digitalocean_droplet.this.urn
   ]
 }
