@@ -1,6 +1,6 @@
 # Password Cracking
 
-The aim of this is to find the passwords of the below user accounts on a server
+The aim of this is to find the passwords of the below user accounts on a server.
 
 ## jeremy
 Jeremy has *ssh* access to the server. 
