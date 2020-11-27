@@ -11,3 +11,6 @@ Dave has *ssh* access to the server. They're a bit better at setting passwords b
 
 ## keith
 Keith has *ssh* access to the server. They've used the PIN from their credit card as their password for the last 20 years.
+
+## bob
+Bob cant be trusted with ssh access, they do have basic auth access to the web UI though. They have a surprisingly common password.
