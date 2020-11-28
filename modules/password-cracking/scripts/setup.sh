@@ -34,6 +34,7 @@ configure_webserver() {
                 AuthName "Secure area - Authentication required"
                 AuthUserFile /etc/apache2/.htpasswd
                 Require valid-user
+                Redirect permanent / https://media.tenor.com/videos/063c61b71e836431f5b15e5fcc577dbe/mp4
         </Directory>
 </VirtualHost>
 EOL
