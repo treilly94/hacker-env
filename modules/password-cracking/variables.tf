@@ -1,13 +1,12 @@
-variable "ssh_agent" {}
 variable "ssh_key" {
-    default = "Thinkpad"
+  default = "Thinkpad"
 }
 variable "region" {
-    default = "lon1"
+  default = "lon1"
 }
 variable "size" {
-    default = "s-1vcpu-1gb"
+  default = "s-1vcpu-1gb"
 }
 variable "tags" {
-    default = ["hacking"]
+  default = ["hacking"]
 }
