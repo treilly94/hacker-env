@@ -3,7 +3,12 @@ include {
 }
 
 terraform {
-  source = "../modules/password-cracking"
+  source = "../modules/vm"
+}
+
+inputs = {
+  name = "password-cracking"
+  script = "${get_terragrunt_dir()}/scripts/setup.sh"
 }
 
 dependencies {

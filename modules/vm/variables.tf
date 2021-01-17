@@ -1,3 +1,6 @@
+variable "name" {
+  default = "vm"
+}
 variable "ssh_key" {
   default = "Thinkpad"
 }
@@ -9,4 +12,7 @@ variable "size" {
 }
 variable "tags" {
   default = ["hacking"]
+}
+variable "script" {
+  default = ""
 }

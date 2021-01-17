@@ -4,7 +4,7 @@ data "digitalocean_ssh_key" "key" {
 
 resource "digitalocean_droplet" "this" {
   image      = "ubuntu-18-04-x64"
-  name       = "docker-tcp"
+  name       = var.name
   region     = var.region
   size       = var.size
   monitoring = true
@@ -18,15 +18,12 @@ resource "digitalocean_droplet" "this" {
       user = "root"
     }
 
-
-    scripts = [
-      "./scripts/setup.sh"
-    ]
+    scripts = [var.script]
   }
 }
 
 resource "digitalocean_project" "this" {
-  name = "docker-tcp"
+  name = var.name
   resources = [
     digitalocean_droplet.this.urn
   ]

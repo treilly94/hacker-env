@@ -3,7 +3,12 @@ include {
 }
 
 terraform {
-  source = "../modules/docker-tcp"
+  source = "../modules/vm"
+}
+
+inputs = {
+  name = "docker-tcp"
+  script = "${get_terragrunt_dir()}/scripts/setup.sh"
 }
 
 dependencies {

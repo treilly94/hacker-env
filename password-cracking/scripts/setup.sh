@@ -7,7 +7,7 @@ update() {
 
 create_user() {
     echo "Adding $1"
-    useradd -m -s /bin/bash $1
+    useradd -m -s /bin/bash "$1"
     echo "$1:$2" | chpasswd
 }
 
