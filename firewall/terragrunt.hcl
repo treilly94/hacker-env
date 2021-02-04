@@ -11,7 +11,6 @@ inputs = {
     "hacking"
   ]
   firewall_allowed_ips = [
-    "81.187.178.80"
   ]
 }
 
