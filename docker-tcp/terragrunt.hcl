@@ -7,7 +7,7 @@ terraform {
 }
 
 inputs = {
-  name = "password-cracking"
+  name = "docker-tcp"
   script = "${get_terragrunt_dir()}/scripts/setup.sh"
 }
 

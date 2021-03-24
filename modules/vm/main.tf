@@ -3,8 +3,8 @@ data "digitalocean_ssh_key" "key" {
 }
 
 resource "digitalocean_droplet" "this" {
-  image  = "ubuntu-18-04-x64"
-  name       = "password-cracking"
+  image      = "ubuntu-18-04-x64"
+  name       = var.name
   region     = var.region
   size       = var.size
   monitoring = true
@@ -13,21 +13,17 @@ resource "digitalocean_droplet" "this" {
 
   provisioner "remote-exec" {
     connection {
-      type        = "ssh"
-      host        = self.ipv4_address
-      user        = "root"
-      agent_identity = var.ssh_agent
+      type = "ssh"
+      host = self.ipv4_address
+      user = "root"
     }
 
-
-    scripts = [
-      "./scripts/setup.sh"
-    ]
+    scripts = [var.script]
   }
 }
 
 resource "digitalocean_project" "this" {
-  name = "password-cracking"
+  name = var.name
   resources = [
     digitalocean_droplet.this.urn
   ]
